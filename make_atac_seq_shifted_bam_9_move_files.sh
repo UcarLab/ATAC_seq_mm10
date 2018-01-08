@@ -23,30 +23,36 @@
 #            7.  peak calling is completed
 #            8.  bedgraph files are generated
 #-------------------------------------------------------------------------------------
+dataDIR=$1 #ARGV, contains folder to move files to
+mkdir -p $dataDIR
+
 scriptDIR=$(pwd)
 workingDIR=$scriptDIR/working
 bamDIR=$workingDIR/trimmomatic/adapterTrimmed/bwa
 gbDIR=$workingDIR/trimmomatic/adapterTrimmed/bwa/BedGraph
 bampeDIR=$workingDIR/trimmomatic/adapterTrimmed/bwa/Bampe_peaks
 broadDIR=$workingDIR/trimmomatic/adapterTrimmed/bwa/Broad_peaks
+igvDIR=$workingDIR/trimmomatic/adapterTrimmed/bwa/IGV
 
-#mkdir $scriptDIR/ATAC_output
-#mkdir $scriptDIR/ATAC_output/bamfiles
-mkdir $scriptDIR/ATAC_output/bedfiles
-mkdir $scriptDIR/ATAC_output/bedGraph
-mkdir $scriptDIR/ATAC_output/IGV
-mkdir $scriptDIR/ATAC_output/peaks
-mkdir $scriptDIR/ATAC_output/peaks/bampe
-mkdir $scriptDIR/ATAC_output/peaks/broad
-mkdir $scriptDIR/ATAC_output/metrics
-mkdir $scriptDIR/ATAC_output/insertSize
+mkdir $dataDIR/bamfiles
+mkdir $dataDIR/bedfiles
+mkdir $dataDIR/bedGraph
+mkdir $dataDIR/IGV
+mkdir $dataDIR/peaks
+mkdir $dataDIR/peaks/bampe
+mkdir $dataDIR/peaks/broad
+mkdir $dataDIR/metrics
+mkdir $dataDIR/insertSize
 
-mv $bamDIR/*bam $scriptDIR/ATAC_output/bamfiles
-mv $bamDIR/*bai $scriptDIR/ATAC_output/bamfiles
-mv $bamDIR/*bed $scriptDIR/ATAC_output/bedfiles
-mv $bamDIR/*insertSize* $scriptDIR/ATAC_output/insertSize
-mv $bamDIR/*metrics.txt $scriptDIR/ATAC_output/metrics
-mv $gbDIR/*bedGraph $scriptDIR/ATAC_output/bedGraph
-mv $bampeDIR/* $scriptDIR/ATAC_output/peaks/bampe
-mv $broadDIR/* $scriptDIR/ATAC_output/peaks/broad
+mv $bamDIR/*bam $dataDIR/bamfiles
+mv $bamDIR/*bai $dataDIR/bamfiles
+mv $bamDIR/*bed $dataDIR/bedfiles
+mv $bamDIR/*insertSize* $dataDIR/insertSize
+mv $bamDIR/*metrics.txt $dataDIR/metrics
+mv $gbDIR/*bedGraph $dataDIR/bedGraph
+mv $gbDIR/*bw $dataDIR/bedGraph
+mv $igvDIR/*tdf $dataDIR/IGV
+mv $bampeDIR/* $dataDIR/peaks/bampe
+mv $broadDIR/* $dataDIR/peaks/broad
+
 

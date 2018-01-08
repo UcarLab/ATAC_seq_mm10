@@ -33,7 +33,8 @@ trimmomaticDIR=$workingDIR/trimmomatic/adapterTrimmed/
 mkdir $trimmomaticDIR/bwa
 
 rm $workingDIR/filelist.txt
-ls -1 $trimmomaticDIR/*_1.trim.trim.fastq > $workingDIR/filelist.txt
+ls -1 $trimmomaticDIR/*R1_001.trim.trim.fastq > $workingDIR/filelist.txt
+#ls -1 $trimmomaticDIR/*_1.trim.trim.fastq > $workingDIR/filelist.txt
 FILENUMBER=$(wc -l $workingDIR/filelist.txt | cut -d' ' -f1)
 
 echo $FILENUMBER
@@ -49,10 +50,12 @@ echo module load R >> $workingDIR/bwa.qsub
 echo module load perl/5.10.1 >> $workingDIR/bwa.qsub
 echo module load samtools/0.1.19 >> $workingDIR/bwa.qsub
 echo module load bedtools >> $workingDIR/bwa.qsub
+
 echo FILE=\$\(head -n \$PBS_ARRAYID $workingDIR/filelist.txt \| tail -1\) >> $workingDIR/bwa.qsub
-echo FILE2=\$\(basename "\${FILE}"\| sed \'s/_1\.trim\.trim\.fastq/_2\.trim\.trim\.fastq/g\'\) >> $workingDIR/bwa.qsub
-echo FILESAM=\$\(basename "\${FILE}"\).hg19.sam >> $workingDIR/bwa.qsub
-echo /opt/compsci/bwa/0.7.12/bin/bwa mem -M /data/shared/genomes/Homo_sapiens/UCSC/hg19/Sequence/BWAIndex/genome.fa \$FILE $trimmomaticDIR/\$FILE2 \> $trimmomaticDIR/bwa/\$FILESAM >> $workingDIR/bwa.qsub
+echo FILE2=\$\(basename "\${FILE}"\| sed \'s/R1_001\.trim\.trim\.fastq/R2_001\.trim\.trim\.fastq/g\'\) >> $workingDIR/bwa.qsub
+echo FILESAM=\$\(basename "\${FILE}"\).mm10.sam >> $workingDIR/bwa.qsub
+echo /opt/compsci/bwa/0.7.12/bin/bwa mem -M /home/ducar/Genomes/mm10/BWAIndex/genome.fa \$FILE $trimmomaticDIR/\$FILE2 \> $trimmomaticDIR/bwa/\$FILESAM >> $workingDIR/bwa.qsub
+# These two are equivalent: /data/shared/genomes/Mus_musculus/UCSC/mm10/Sequence/BWAIndex/genome.fa
 
 ######
 qsub -V $workingDIR/bwa.qsub
