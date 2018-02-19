@@ -58,6 +58,7 @@ echo module load bedtools/2.17.0 >> $workingDIR/BW.qsub
 echo module load samtools/0.1.19 >> $workingDIR/BW.qsub
 echo module load java/1.8.0_73 >> $workingDIR/BW.qsub
 echo module load kent/default >> $workingDIR/BW.qsub
+echo module load homer/4.6 >> $workingDIR/BW.qsub
 
 # Change file names 
 echo FILE=\$\(head -n \$PBS_ARRAYID $workingDIR/bamfilelist.txt \| tail -1\) >> $workingDIR/BW.qsub
@@ -67,12 +68,22 @@ echo FILENAME2=\$\(basename \"\${FILE}\" \| sed \'s/\.bam/\.tdf/g\'\)  >> $worki
 echo FILENAME3=\$\(basename \"\${FILE}\" \| sed \'s/\.bam/\.bw/g\'\)  >> $workingDIR/BW.qsub
 
 # run programs
-echo /home/ducar/Software/HOMER/bin/makeTagDirectory $gbDIR/\$BASENAME \$FILE -genome mm10 -single -fragLength 150 >> $workingDIR/BW.qsub
-echo /home/ducar/Software/HOMER/bin/makeUCSCfile $gbDIR/\$BASENAME -fragLength 150 -o $gbDIR/\$FILENAME >> $workingDIR/BW.qsub
-echo /home/ducar/Software/HOMER/bin/makeUCSCfile $gbDIR/\$BASENAME -bigWig /home/ducar/Genomes/mm10_v2.chrom.sizes -fragLength 150 -o $gbDIR/\$FILENAME3 >> $workingDIR/BW.qsub
+echo /opt/compsci/homer/4.6/bin/makeTagDirectory $gbDIR/\$BASENAME \$FILE -genome mm10 -single -fragLength 150 >> $workingDIR/BW.qsub
+echo /opt/compsci/homer/4.6/bin/makeUCSCfile $gbDIR/\$BASENAME -fragLength 150 -o $gbDIR/\$FILENAME >> $workingDIR/BW.qsub
+
 echo gunzip $gbDIR/*.gz >> $workingDIR/BW.qsub 
-#echo bedGraphToBigWig $gbDIR/\$FILENAME /home/ducar/Genomes/mm10_v2.chrom.sizes $gbDIR/\$FILENAME3 >> $workingDIR/bW.qsub
-echo /home/ducar/Software/IGVTools/igvtools toTDF $gbDIR/\$FILENAME $igvDIR/\$FILENAME2 mm10 >> $workingDIR/BW.qsub
+
+echo sed \'1d\' $gbDIR/\$FILENAME \> tmpfile >> $workingDIR/BW.qsub
+echo mv tmpfile tmp.bedGraph >> $workingDIR/BW.qsub
+echo LC_COLLATE=C sort -k1,1 -k2,2n tmp.bedGraph \> file_sorted.bedGraph >> $workingDIR/BW.qsub
+echo /opt/compsci/kent/bin/bedGraphToBigWig  file_sorted.bedGraph /projects/ucar-lab/Genomes/mm10_v2.chrom.sizes $gbDIR/\$FILENAME3 >> $workingDIR/BW.qsub
+
+
+
+#echo /opt/compsci/homer/4.6/bin/makeUCSCfile $gbDIR/\$FILENAME -bigWig /projects/ucar-lab/Genomes/mm10_v2.chrom.sizes -fragLength 150 -o $gbDIR/\$FILENAME3 >> $workingDIR/BW.qsub
+
+
+echo /projects/ucar-lab/Software/IGVTools/igvtools toTDF $gbDIR/\$FILENAME $igvDIR/\$FILENAME2 mm10 >> $workingDIR/BW.qsub
 
 qsub -V $workingDIR/BW.qsub
 echo "use qstat -u <username> to check the status of your job" 

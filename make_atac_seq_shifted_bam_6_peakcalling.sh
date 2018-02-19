@@ -41,7 +41,7 @@ mkdir $peakDIR
 mkdir $peakDIR2
 
 #rm $workingDIR/bedfilelist.txt
-$workingDIR/bamfilelist.txt
+rm $workingDIR/bamfilelist.txt
 rm $workingDIR/MACS.qsub
 
 #ls -1 $inputDIR/*bed > $workingDIR/bedfilelist.txt

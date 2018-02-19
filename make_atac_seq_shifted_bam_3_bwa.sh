@@ -45,6 +45,7 @@ echo \#PBS -l nodes=1:ppn=16 >> $workingDIR/bwa.qsub
 echo \#PBS -l walltime=48:00:00 >> $workingDIR/bwa.qsub
 echo \#PBS -N bwa  >> $workingDIR/bwa.qsub
 echo \#PBS -t 1-$FILENUMBER%100 >> $workingDIR/bwa.qsub
+echo module load gcc/4.9.2 >> $workingDIR/bwa.qsub
 echo module load python >> $workingDIR/bwa.qsub
 echo module load R >> $workingDIR/bwa.qsub
 echo module load perl/5.10.1 >> $workingDIR/bwa.qsub
@@ -54,7 +55,7 @@ echo module load bedtools >> $workingDIR/bwa.qsub
 echo FILE=\$\(head -n \$PBS_ARRAYID $workingDIR/filelist.txt \| tail -1\) >> $workingDIR/bwa.qsub
 echo FILE2=\$\(basename "\${FILE}"\| sed \'s/R1_001\.trim\.trim\.fastq/R2_001\.trim\.trim\.fastq/g\'\) >> $workingDIR/bwa.qsub
 echo FILESAM=\$\(basename "\${FILE}"\).mm10.sam >> $workingDIR/bwa.qsub
-echo /opt/compsci/bwa/0.7.12/bin/bwa mem -M /home/ducar/Genomes/mm10/BWAIndex/genome.fa \$FILE $trimmomaticDIR/\$FILE2 \> $trimmomaticDIR/bwa/\$FILESAM >> $workingDIR/bwa.qsub
+echo /opt/compsci/bwa/0.7.12/bin/bwa mem -M /projects/ucar-lab/Genomes/mm10/BWAIndex/genome.fa \$FILE $trimmomaticDIR/\$FILE2 \> $trimmomaticDIR/bwa/\$FILESAM >> $workingDIR/bwa.qsub
 # These two are equivalent: /data/shared/genomes/Mus_musculus/UCSC/mm10/Sequence/BWAIndex/genome.fa
 
 ######
