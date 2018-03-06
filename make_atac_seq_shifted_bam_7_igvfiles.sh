@@ -73,11 +73,12 @@ echo /opt/compsci/homer/4.6/bin/makeUCSCfile $gbDIR/\$BASENAME -fragLength 150 -
 
 echo gunzip $gbDIR/*.gz >> $workingDIR/BW.qsub 
 
-echo sed \'1d\' $gbDIR/\$FILENAME \> tmpfile >> $workingDIR/BW.qsub
-echo mv tmpfile tmp.bedGraph >> $workingDIR/BW.qsub
-echo LC_COLLATE=C sort -k1,1 -k2,2n tmp.bedGraph \> file_sorted.bedGraph >> $workingDIR/BW.qsub
-echo /opt/compsci/kent/bin/bedGraphToBigWig  file_sorted.bedGraph /projects/ucar-lab/Genomes/mm10_v2.chrom.sizes $gbDIR/\$FILENAME3 >> $workingDIR/BW.qsub
+echo sed \'1d\' $gbDIR/\$FILENAME \> $workingDIR/\$BASENAME >> $workingDIR/BW.qsub
 
+echo LC_COLLATE=C sort -k1,1 -k2,2n $workingDIR/\$BASENAME \> $workingDIR/\$FILENAME >> $workingDIR/BW.qsub
+echo /opt/compsci/kent/bin/bedGraphToBigWig $workingDIR/\$FILENAME /projects/ucar-lab/Genomes/mm10_v2.chrom.sizes $gbDIR/\$FILENAME3 >> $workingDIR/BW.qsub
+echo rm -f $workingDIR/\$BASENAME >> $workingDIR/BW.qsub
+echo rm -f $workingDIR/\$FILENAME >> $workingDIR/BW.qsub
 
 
 #echo /opt/compsci/homer/4.6/bin/makeUCSCfile $gbDIR/\$FILENAME -bigWig /projects/ucar-lab/Genomes/mm10_v2.chrom.sizes -fragLength 150 -o $gbDIR/\$FILENAME3 >> $workingDIR/BW.qsub
