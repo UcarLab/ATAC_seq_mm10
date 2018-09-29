@@ -48,7 +48,7 @@ echo \#PBS -t 1-$FILENUMBER%100 >> $workingDIR/bwa.qsub
 echo module load gcc/4.9.2 >> $workingDIR/bwa.qsub
 echo module load python >> $workingDIR/bwa.qsub
 echo module load R >> $workingDIR/bwa.qsub
-echo module load perl/5.10.1 >> $workingDIR/bwa.qsub
+echo module load perl/5.24.0 >> $workingDIR/bwa.qsub
 echo module load samtools/0.1.19 >> $workingDIR/bwa.qsub
 echo module load bedtools >> $workingDIR/bwa.qsub
 

@@ -53,13 +53,13 @@ echo \#PBS -l nodes=1:ppn=16 >> $workingDIR/BW.qsub
 echo \#PBS -l walltime=12:00:00 >> $workingDIR/BW.qsub
 echo \#PBS -N igv  >> $workingDIR/BW.qsub
 echo \#PBS -t 1-$FILENUMBER >> $workingDIR/BW.qsub
-echo module load python/2.7.3 >> $workingDIR/BW.qsub
-echo module load bedtools/2.17.0 >> $workingDIR/BW.qsub
-echo module load samtools/0.1.19 >> $workingDIR/BW.qsub
+echo module load python >> $workingDIR/BW.qsub
+echo module load bedtools >> $workingDIR/BW.qsub
+echo module load samtools/1.5 >> $workingDIR/BW.qsub
 echo module load java/1.8.0_73 >> $workingDIR/BW.qsub
 echo module load kent/default >> $workingDIR/BW.qsub
 echo module load homer/4.6 >> $workingDIR/BW.qsub
-
+echo module load gcc/4.9.2 >> $workingDIR/BW.qsub
 # Change file names 
 echo FILE=\$\(head -n \$PBS_ARRAYID $workingDIR/bamfilelist.txt \| tail -1\) >> $workingDIR/BW.qsub
 echo BASENAME=\$\(basename \"\${FILE}\" \| sed \'s/\.bam//g\'\)  >> $workingDIR/BW.qsub

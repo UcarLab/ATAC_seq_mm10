@@ -51,15 +51,14 @@ echo \#PBS -N bamtobed  >> $workingDIR/postPostBWA.qsub
 echo \#PBS -t 1-$FILENUMBER >> $workingDIR/postPostBWA.qsub
 echo module load python >> $workingDIR/postPostBWA.qsub
 echo module load R >> $workingDIR/postPostBWA.qsub
-echo module load perl/5.10.1 >> $workingDIR/postPostBWA.qsub
-echo module load samtools/0.1.19 >> $workingDIR/postPostBWA.qsub
-echo module load gcc/7.1.0 >> $workingDIR/postPostBWA.qsub
+echo module load perl/5.24.0 >> $workingDIR/postPostBWA.qsub
+echo module load samtools/1.5 >> $workingDIR/postPostBWA.qsub
+echo module load gcc/4.9.2 >> $workingDIR/postPostBWA.qsub
 echo module load bedtools >> $workingDIR/postPostBWA.qsub
 echo FILE=\$\(head -n \$PBS_ARRAYID $workingDIR/shiftedbamfilelist.txt \| tail -1\) >> $workingDIR/postPostBWA.qsub
 echo FILENAME=\$\(basename \"\${FILE}\" \| sed \'s/\.bam/_sorted.bam/g\'\)  >> $workingDIR/postPostBWA.qsub
-echo FILENAME1=\$\(basename \"\${FILE}\" \| sed \'s/\.bam/_sorted/g\'\)  >> $workingDIR/postPostBWA.qsub
 echo FILENAME2=\$\(basename \"\${FILE}\" \| sed \'s/\.bam/_sorted.bed/g\'\) >> $workingDIR/postPostBWA.qsub
-echo samtools sort \$FILE $outputDIR/\$FILENAME1 >> $workingDIR/postPostBWA.qsub
+echo samtools sort \$FILE -o $outputDIR/\$FILENAME >> $workingDIR/postPostBWA.qsub
 echo samtools index $outputDIR/\$FILENAME >> $workingDIR/postPostBWA.qsub
 echo bedtools bamtobed -i $outputDIR/\$FILENAME \> $outputDIR/\$FILENAME2 >> $workingDIR/postPostBWA.qsub
 

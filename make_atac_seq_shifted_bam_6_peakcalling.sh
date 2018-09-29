@@ -53,10 +53,10 @@ echo \#PBS -l nodes=1:ppn=16 >> $workingDIR/MACS.qsub
 echo \#PBS -l walltime=12:00:00 >> $workingDIR/MACS.qsub
 echo \#PBS -N peakcall  >> $workingDIR/MACS.qsub
 echo \#PBS -t 1-$FILENUMBER >> $workingDIR/MACS.qsub
-echo module load python >> $workingDIR/MACS.qsub
+echo module load python/2.7.3 >> $workingDIR/MACS.qsub
 echo module load R >> $workingDIR/MACS.qsub
-echo module load perl/5.10.1 >> $workingDIR/MACS.qsub
-echo module load samtools/0.1.19 >> $workingDIR/MACS.qsub
+echo module load perl/5.24.0 >> $workingDIR/MACS.qsub
+echo module load samtools/1.5 >> $workingDIR/MACS.qsub
 echo module load bedtools >> $workingDIR/MACS.qsub
 echo module load MACS/2.1.0.20151222 >> $workingDIR/MACS.qsub
 echo FILE=\$\(head -n \$PBS_ARRAYID $workingDIR/bamfilelist.txt \| tail -1\) >> $workingDIR/MACS.qsub
